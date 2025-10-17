@@ -14,14 +14,19 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
 public class TestController {
     @Value("${server.port}") String port;
     @Value("${app.server}") String server;
-    ClientRepository clientRepository;
-    public TestController(ClientRepository clientRepository) {}
+    final ClientRepository clientRepository;
+
+    public TestController(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
 
     //Endpoint simple
     @GetMapping("bonjour")
@@ -49,7 +54,7 @@ public class TestController {
     }
 
     //Endpoint avec @RequestBody
-    @PostMapping("client")
+    @GetMapping("client")
     public Client getClient(@RequestBody Client client) {
         client.setAge(40);
         return client;
@@ -67,7 +72,7 @@ public class TestController {
         String path="src/main/resources/static/photos/"+client.getId()+".jpg";
         photo.transferTo(Path.of(path));
 
-        client.setPhoto("http://"+server+":"+port+"/photos/"+client.getId());
+        client.setPhoto("http://"+server+":"+port+"/api/photos/"+client.getId());
         clientRepository.addClient( client);
         return client;
     }
@@ -82,6 +87,16 @@ public class TestController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG)
                 .body(file);
 
+    }
+
+    @GetMapping("clients")
+    public List<Client> getAllClient() {
+        return clientRepository.getAllClients();
+    }
+
+    @DeleteMapping("clients/{id}")
+    public void deleteClient(@PathVariable Long id) {
+        clientRepository.deleteClient(id);
     }
 }
 
