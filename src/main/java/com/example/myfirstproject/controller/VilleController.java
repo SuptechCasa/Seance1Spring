@@ -30,7 +30,7 @@ public class VilleController {
     }
 
     @PostMapping("villes")
-    public Ville addVille(Ville ville){
+    public Ville addVille(@RequestBody Ville ville){
         return villeService.addVille(ville);
     }
 
@@ -38,8 +38,8 @@ public class VilleController {
     public List<Ville> getAllVille(){
         return villeService.getAllVilles();
     }
-    @DeleteMapping("villes")
-    public void deleteVille(UUID id){
+    @DeleteMapping("villes/{id}")
+    public void deleteVille(@PathVariable UUID id){
         villeService.deleteVille(id);
     }
 
@@ -62,4 +62,5 @@ public class VilleController {
         photo.transferTo(Path.of(path));
         return client;
     }
+
 }

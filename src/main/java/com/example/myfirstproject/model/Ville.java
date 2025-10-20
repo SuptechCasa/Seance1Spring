@@ -1,13 +1,11 @@
 package com.example.myfirstproject.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor @AllArgsConstructor @Data
@@ -17,4 +15,13 @@ public class Ville {
     UUID id;
     String name;
     String country;
+
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "ville")
+    List<Client> clients;
+
+    public Client addClient(Client client) {
+        client.setVille(this);
+        this.clients.add(client);
+        return client;
+    }
 }

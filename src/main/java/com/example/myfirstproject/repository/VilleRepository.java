@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface VilleRepository extends JpaRepository<Ville, UUID> {
     Ville findByName(String villeName);
+
+    
 }
