@@ -1,7 +1,7 @@
 package com.example.myfirstproject.controller;
 
 import com.example.myfirstproject.model.Client;
-import com.example.myfirstproject.repository.ClientRepository;
+import com.example.myfirstproject.service.ClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -11,22 +11,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
 @RestController
 @RequestMapping("api")
-public class TestController {
+public class ClientController {
     @Value("${server.port}") String port;
     @Value("${app.server}") String server;
-    final ClientRepository clientRepository;
 
-    public TestController(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+    final ClientService clientService;
+
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
-
 
     //Endpoint simple
     @GetMapping("bonjour")
@@ -73,7 +72,7 @@ public class TestController {
         photo.transferTo(Path.of(path));
 
         client.setPhoto("http://"+server+":"+port+"/api/photos/"+client.getId());
-        clientRepository.addClient( client);
+        clientService.addClient(client);
         return client;
     }
 
@@ -91,12 +90,12 @@ public class TestController {
 
     @GetMapping("clients")
     public List<Client> getAllClient() {
-        return clientRepository.getAllClients();
+        return clientService.getAllClient();
     }
 
     @DeleteMapping("clients/{id}")
     public void deleteClient(@PathVariable Long id) {
-        clientRepository.deleteClient(id);
+        clientService.deleteClient(id);
     }
 }
 
