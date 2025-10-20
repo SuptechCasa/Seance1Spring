@@ -18,8 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api")
 public class ClientController {
-    @Value("${server.port}") String port;
-    @Value("${app.server}") String server;
+
 
     final ClientService clientService;
 
@@ -59,24 +58,7 @@ public class ClientController {
         return client;
     }
 
-    //Endpoint avec @RequestParam + fichier
-    @PostMapping("client")
-    public Client addClient(
-            @RequestPart("photo") MultipartFile photo,
-            @RequestPart("client") String clientString
-    ) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Client client = objectMapper.readValue(clientString, Client.class);
-
-        String path="src/main/resources/static/photos/"+client.getId()+".jpg";
-        photo.transferTo(Path.of(path));
-
-        client.setPhoto("http://"+server+":"+port+"/api/photos/"+client.getId());
-        clientService.addClient(client);
-        return client;
-    }
-
-    @GetMapping("photos/{id}")
+     @GetMapping("photos/{id}")
     public ResponseEntity<Resource> getPhoto(@PathVariable String id) {
         String path="src/main/resources/static/photos/"+id+".jpg";
         FileSystemResource file = new FileSystemResource(path);
@@ -87,7 +69,7 @@ public class ClientController {
                 .body(file);
 
     }
-
+    //Get All Clients
     @GetMapping("clients")
     public List<Client> getAllClient() {
         return clientService.getAllClient();

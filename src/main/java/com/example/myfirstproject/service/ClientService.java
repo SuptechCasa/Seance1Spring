@@ -20,8 +20,8 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public void addClient(Client client) {
-        clientRepository.save(client);
+    public Client addClient(Client client) {
+        return clientRepository.save(client);
     }
 
     public void deleteClient(Long id) {
