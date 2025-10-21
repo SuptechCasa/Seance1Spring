@@ -13,7 +13,7 @@ public class ClientSpecifications {
         return (root, query, criteriaBuilder) -> {
             // Si le prénom n'est pas renseigné, on ignore cette condition
             if (firstname == null || firstname.trim().isEmpty()) {
-                return criteriaBuilder.conjunction(); // Condition toujours vraie
+                return criteriaBuilder.conjunction(); // Condition toujours vraie 1=1
             }
 
             // Crée la condition : firstname = valeur

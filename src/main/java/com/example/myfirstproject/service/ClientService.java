@@ -2,6 +2,7 @@ package com.example.myfirstproject.service;
 
 import com.example.myfirstproject.model.Client;
 import com.example.myfirstproject.repository.ClientRepository;
+import com.example.myfirstproject.specifications.ClientSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,10 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
+
+    public List<Client> getClientByFirstname(String firstname) {
+        return clientRepository.findAll(ClientSpecifications.hasFirstname(firstname));
+    }
 
     public List<Client> getAllClient() {
         return clientRepository.findAll();

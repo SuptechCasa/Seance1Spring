@@ -1,6 +1,7 @@
 package com.example.myfirstproject.service;
 
 import com.example.myfirstproject.model.Ville;
+import com.example.myfirstproject.repository.NombreClientsParVille;
 import com.example.myfirstproject.repository.VilleRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,9 @@ public class VilleService {
 
     public Ville getVilleByName(String villeName) {
         return villeRepository.findByName(villeName);
+    }
+
+    public List<NombreClientsParVille> countClientsByVille(){
+        return villeRepository.countClientsByVille();
     }
 }

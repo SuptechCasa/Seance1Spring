@@ -2,6 +2,7 @@ package com.example.myfirstproject.controller;
 
 import com.example.myfirstproject.model.Client;
 import com.example.myfirstproject.model.Ville;
+import com.example.myfirstproject.repository.NombreClientsParVille;
 import com.example.myfirstproject.service.ClientService;
 import com.example.myfirstproject.service.VilleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,4 +64,8 @@ public class VilleController {
         return client;
     }
 
+    @GetMapping("villes/nbclient")
+    public List<NombreClientsParVille> countClientsByVille(){
+        return villeService.countClientsByVille();
+    }
 }
