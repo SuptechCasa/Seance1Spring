@@ -17,8 +17,12 @@ public class ClientService {
     }
 
 
-    public List<Client> getClientByFirstname(String firstname) {
-        return clientRepository.findAll(ClientSpecifications.hasFirstname(firstname));
+    public List<Client> getClientByFirstnameandVilleName(String firstname,String villeName) {
+        return clientRepository.findAll(
+                ClientSpecifications.hasFirstname(firstname)
+                        .and(ClientSpecifications.isAdult())
+                        .and(ClientSpecifications.hasVille(villeName))
+        );
     }
 
     public List<Client> getAllClient() {

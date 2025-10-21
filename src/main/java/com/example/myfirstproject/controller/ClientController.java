@@ -80,5 +80,12 @@ public class ClientController {
         clientService.deleteClient(id);
     }
 
+    @GetMapping("clients/filter")
+    public List<Client> getAllFiltredClients(
+            @RequestParam("firstname") String firstName,
+            @RequestParam(value = "villename",required = false) String villeName
+            ) {
+        return clientService.getClientByFirstnameandVilleName(firstName,villeName);
+    }
 }
 

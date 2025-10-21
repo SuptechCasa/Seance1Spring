@@ -1,5 +1,6 @@
 package com.example.myfirstproject.controller;
 
+import com.example.myfirstproject.dto.VilleDTO;
 import com.example.myfirstproject.model.Client;
 import com.example.myfirstproject.model.Ville;
 import com.example.myfirstproject.repository.NombreClientsParVille;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api")
@@ -36,8 +38,10 @@ public class VilleController {
     }
 
     @GetMapping("villes")
-    public List<Ville> getAllVille(){
-        return villeService.getAllVilles();
+    public List<VilleDTO> getAllVille(){
+        return villeService.getAllVilles().stream().map((ville)->{
+            return ville.toDTO();
+        }).collect(Collectors.toUnmodifiableList());
     }
     @DeleteMapping("villes/{id}")
     public void deleteVille(@PathVariable UUID id){
