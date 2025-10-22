@@ -1,12 +1,16 @@
 package com.example.myfirstproject.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.myfirstproject.model.User;
+import com.example.myfirstproject.service.UserService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api")
 public class TestController {
+    final UserService userService;
+    public TestController(UserService userService) {
+        this.userService = userService;
+    }
     @GetMapping("public")
     public String publicMethod(){
         return "public";
@@ -20,5 +24,10 @@ public class TestController {
     @GetMapping("user")
     public String userMethod(){
         return "user";
+    }
+
+    @PostMapping("register")
+    public User register(@RequestBody User user){
+        return userService.addUser(user);
     }
 }

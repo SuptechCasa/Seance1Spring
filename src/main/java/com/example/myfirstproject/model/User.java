@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,14 +27,14 @@ public class User implements UserDetails {
     boolean enabled;
     String roles;
 
-    List<String> getRoles(){
+    List<String> getRolesName(){
         return Arrays.asList(this.roles.split(","));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        this.getRoles().forEach(role -> {authorities.add(new SimpleGrantedAuthority(role));});
+        this.getRolesName().forEach(role -> {authorities.add(new SimpleGrantedAuthority(role));});
         return authorities;
     }
 
@@ -46,5 +47,11 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
 
 }
