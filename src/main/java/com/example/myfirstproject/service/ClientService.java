@@ -4,6 +4,9 @@ import com.example.myfirstproject.model.Client;
 import com.example.myfirstproject.repository.ClientRepository;
 import com.example.myfirstproject.specifications.ClientSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +38,10 @@ public class ClientService {
 
     public void deleteClient(Long id) {
         clientRepository.deleteById(id);
+    }
+
+    public List<Client> getClientPages(int page, int size, String field) {
+        Pageable pg= PageRequest.of(page,size, Sort.by(field).ascending());
+        return clientRepository.findAll(pg).getContent();
     }
 }

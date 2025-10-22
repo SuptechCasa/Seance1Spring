@@ -17,6 +17,7 @@ public class Ville {
     UUID id;
     String name;
     String country;
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "ville")
     List<Client> clients;
 

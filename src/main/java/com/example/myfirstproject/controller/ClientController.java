@@ -87,5 +87,10 @@ public class ClientController {
             ) {
         return clientService.getClientByFirstnameandVilleName(firstName,villeName);
     }
+
+    @GetMapping("clients/{page}/{size}/{field}")
+    public List<Client> getClients(@PathVariable int page, @PathVariable int size, @PathVariable String field) {
+        return clientService.getClientPages(page,size,field);
+    }
 }
 
